@@ -7,8 +7,10 @@ import { parse } from 'dotenv';
 export class ConfigService {
     private readonly envConfig: { [key: string]: string }
     constructor() {
-        const isDevelopment = process.env.NODE_ENV !== 'production'
-        if(isDevelopment) {
+        const env = process.env.NODE_ENV || 'development'
+        const envFilePath = path.join(process.cwd(), `.env.${env}`)
+        console.log("*********", envFilePath)
+        if(env === 'development') {
             const envFilePath = path.join(process.cwd(), '.env.development')
             const existsPath = fs.existsSync(envFilePath)
             if(!existsPath) {
